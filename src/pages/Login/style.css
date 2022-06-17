@@ -1,0 +1,39 @@
+.auth-input-container {
+  margin: 5% 5% 5% 5%;
+}
+
+.auth-paper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  width: 30vh;
+}
+
+.auth-button {
+  background-color: rgb(158, 158, 148) !important;
+}
+
+.auth-page {
+  background-color: rgb(158, 158, 148);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.auth-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+#auth-typo {
+  margin: 5% 5% 5% 5%;
+}
