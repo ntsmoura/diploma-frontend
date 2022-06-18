@@ -1,33 +1,25 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../../api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import { TextField, Paper, Typography } from "@mui/material";
 import "./style.css";
+import useAuth from "../../hooks/useAuth";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 function Login() {
-  const navigate = useNavigate();
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
 
+  const { login, error } = useAuth();
+
   const submitLogin = async (event) => {
     event.preventDefault();
-    try {
-      await api
-        .post("/acesso/login", { cpf, senha })
-        .then((response) => navigate("/home"));
-    } catch (e) {
-      if (e.response) {
-        if (e.response.status === 401) toast.error("CPF ou Senha inválidos!");
-        else toast.error("Algum erro ocorreu.");
-      } else toast.error("Sistema indisponível. Tente novamente mais tarde.");
-    }
+    await login({ cpf, senha });
+    console.log(error);
   };
 
   return (
