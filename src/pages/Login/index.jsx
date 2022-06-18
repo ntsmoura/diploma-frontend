@@ -14,12 +14,13 @@ function Login() {
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
 
-  const { login, error } = useAuth();
+  const { login } = useAuth();
 
   const submitLogin = async (event) => {
     event.preventDefault();
-    await login({ cpf, senha });
-    console.log(error);
+    await login({ cpf, senha }).catch(() => {
+      toast.error("Usuário ou senha inválidos!");
+    });
   };
 
   return (

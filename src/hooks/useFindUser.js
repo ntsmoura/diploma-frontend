@@ -22,6 +22,7 @@ export default function useFindUser() {
   }, []);
   return {
     user,
+    setUser,
     isLoading,
   };
 }
