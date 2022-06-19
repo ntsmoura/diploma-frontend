@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import api from "../api";
+import Cookies from "universal-cookie";
 export default function useFindUser() {
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
-    async function findUser(token) {
+    async function findUser() {
+      const cookies = new Cookies();
+      const token = cookies.get("token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };

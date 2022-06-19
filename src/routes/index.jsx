@@ -4,6 +4,8 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import useFindUser from "../hooks/useFindUser";
 import { UserContext } from "../hooks/UserContext";
+import PrivateRoute from "./PrivateRoutes";
+import Landing from "../pages/Landing";
 
 function AppRoutes() {
   const { user, setUser, isLoading } = useFindUser();
@@ -11,8 +13,11 @@ function AppRoutes() {
     <UserContext.Provider value={{ user, setUser, isLoading }}>
       <Router>
         <Routes>
-          <Route path="/login" exact element={<Login />} />
-          <Route path="/home" exact element={<Home />} />
+          <Route exact path="/" element={<Landing />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/home" element={<PrivateRoute />}>
+            <Route exact path="/home" element={<Home />} />
+          </Route>
         </Routes>
       </Router>
     </UserContext.Provider>

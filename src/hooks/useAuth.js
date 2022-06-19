@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 import { UserContext } from "./UserContext";
+import Cookies from "universal-cookie";
 
 export default function useAuth() {
-  let navigate = useNavigate();
+  const cookies = new Cookies();
+  const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   //set user in context and push them home
   const setUserContext = async (token) => {
@@ -29,12 +31,30 @@ export default function useAuth() {
       api
         .post("/acesso/login", { cpf, senha })
         .then(async (res) => {
-          await setUserContext(res.data.acessoToken);
+          const token = res.data.acessoToken;
+          cookies.set("token", token, {
+            path: "/",
+            sameSite: "strict",
+            expires: new Date(new Date().getTime() + 15 * 60000),
+          });
+          await setUserContext(token);
           resolve();
         })
         .catch(reject());
     });
   };
 
-  return login;
+  const logout = async () => {
+    return new Promise((resolve, reject) => {
+      try {
+        cookies.remove("token");
+        navigate("/login");
+        resolve();
+      } catch {
+        reject();
+      }
+    });
+  };
+
+  return { login, logout };
 }
