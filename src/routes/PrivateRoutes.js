@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import { UserContext } from "./../hooks/UserContext";
+import { UserContext } from "./../contexts/UserContext";
 //import Loading from "./../components/Loading";
 export default function PrivateRoute(props) {
   const { user, isLoading } = useContext(UserContext);

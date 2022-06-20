@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
 import useFindUser from "../hooks/useFindUser";
-import { UserContext } from "../hooks/UserContext";
+import { UserContext } from "../contexts/UserContext";
 import PrivateRoute from "./PrivateRoutes";
 import Landing from "../pages/Landing";
 

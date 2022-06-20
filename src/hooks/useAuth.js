@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../contexts/UserContext";
 import Cookies from "universal-cookie";
 
 export default function useAuth() {
