@@ -1,5 +1,6 @@
 .create-user-input-container {
   display: flex;
+  width: 50%;
   flex-direction: column;
 }
 
@@ -28,9 +29,18 @@
 
 .create-user-button-container {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  width: fit-content;
 }
 
 .create-user-textfield {
   margin-top: 1% !important;
+}
+
+.create-user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+  width: 100%;
 }

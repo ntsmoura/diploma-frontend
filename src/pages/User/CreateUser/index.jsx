@@ -2,7 +2,15 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 //import { ToastContainer, toast } from "react-toastify";
-import { Paper, TextField, Button } from "@mui/material";
+import {
+  Paper,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from "@mui/material";
 import { UserContext } from "../../../contexts/UserContext";
 import Menu from "../../../components/Menu";
 import api from "../../../api";
@@ -31,7 +39,8 @@ function CreateUser() {
     headers: { Authorization: `Bearer ${token}` }
   };
 
-  const createNewUser = async () => {
+  const createNewUser = async event => {
+    event.preventDefault();
     await api
       .post(
         "/usuario",
@@ -80,7 +89,7 @@ function CreateUser() {
                 name="sobrenome"
                 required
                 placeholder="Sobrenome"
-                value={nome}
+                value={sobrenome}
                 onChange={e => setSobrenome(e.target.value)}
               />
               <TextField
@@ -90,7 +99,7 @@ function CreateUser() {
                 name="telefone"
                 required
                 placeholder="Telefone"
-                value={nome}
+                value={telefone}
                 onChange={e => setTelefone(e.target.value)}
               />
               <TextField
@@ -100,9 +109,48 @@ function CreateUser() {
                 name="email"
                 required
                 placeholder="E-mail"
-                value={nome}
+                value={email}
                 onChange={e => setEmail(e.target.value)}
               />
+              {user.cargo === "Diretor" && (
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                  <InputLabel id="create-user-select-label">Cargo</InputLabel>
+                  <Select
+                    className="create-user-select"
+                    value={cargo}
+                    variant="standard"
+                    label="Cargo"
+                    labelId="create-user-select-label"
+                    onChange={e => setCargo(e.target.value)}
+                  >
+                    <MenuItem value={"Diretor"}>Diretor</MenuItem>
+                    <MenuItem value={"Dirigente"}>Dirigente</MenuItem>
+                    <MenuItem value={"Funcionário de Instituição Parceira"}>
+                      Funcionário
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+              {user.cargo === "Superintendente" && (
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                  <InputLabel id="create-user-select-label">Cargo</InputLabel>
+                  <Select
+                    className="create-user-select"
+                    value={cargo}
+                    label="Cargo"
+                    onChange={e => setCargo(e.target.value)}
+                  >
+                    <MenuItem value={"Superintendente"}>
+                      Superintendente
+                    </MenuItem>
+                    <MenuItem value={"Dirigente"}>Dirigente</MenuItem>
+                    <MenuItem value={"Coordenador"}>Coordenador CARE</MenuItem>
+                    <MenuItem value={"Funcionário de Institução Validadora"}>
+                      Funcionário
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              )}
             </div>
             <div className="create-user-button-container">
               <Button

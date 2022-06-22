@@ -6,25 +6,57 @@ import useAuth from "../../hooks/useAuth";
 
 function Menu({ user }) {
   const navigate = useNavigate();
-  
+
   const { logout } = useAuth();
+
+  const handleLogout = event => {
+    logout()
+      .then(() => {
+        navigate("/login");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const render = () => {
+    if ((user.cargo === "Diretor") | (user.cargo === "Superintendente"))
+      return (
+        <MenuItem
+          className="menu-item"
+          onClick={() => {
+            navigate("/user");
+          }}
+        >
+          Usuários
+        </MenuItem>
+      );
+    else if (user.cargo === "Dirigente")
+      return (
+        <MenuItem
+          className="menu-item"
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          A preencher
+        </MenuItem>
+      );
+    else return <div />;
+  };
 
   return (
     <MenuList id="menu">
-      <MenuItem className="menu-item" onClick={()=>{navigate("/home")}}>
+      <MenuItem
+        className="menu-item"
+        onClick={() => {
+          navigate("/home");
+        }}
+      >
         Home
       </MenuItem>
-      {(user.cargo === "Diretor" | user.cargo === "Superintendente") && (
-        <MenuItem className="menu-item" onClick={()=>{navigate("/user")}}>
-          Usuários
-        </MenuItem>
-      )}
-      {user.cargo === "Dirigente" && (
-        <MenuItem className="menu-item" onClick={navigate("/login")}>
-          A preencher
-        </MenuItem>
-      )}
-      <MenuItem className="menu-item" onClick={logout}>
+      {render()}
+      <MenuItem className="menu-item" onClick={handleLogout}>
         Logout
       </MenuItem>
     </MenuList>

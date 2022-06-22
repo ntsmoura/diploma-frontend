@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import { TextField, Paper, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 import useAuth from "../../hooks/useAuth";
 import "@fontsource/roboto/300.css";
@@ -13,14 +14,19 @@ import "@fontsource/roboto/700.css";
 function Login() {
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
 
   const { login } = useAuth();
 
   const submitLogin = async event => {
     event.preventDefault();
-    await login({ cpf, senha }).catch(() => {
-      toast.error("Usuário ou senha inválidos!");
-    });
+    await login({ cpf, senha })
+      .then(() => {
+        navigate("/home");
+      })
+      .catch(err => {
+        toast.error("Usuário ou senha inválidos!");
+      });
   };
 
   return (
