@@ -6,18 +6,21 @@ import useAuth from "../../hooks/useAuth";
 
 function Menu({ user }) {
   const navigate = useNavigate();
-  const navigateLogin = (event) => {
-    navigate("/login");
-  };
+  
   const { logout } = useAuth();
 
   return (
     <MenuList id="menu">
-      <MenuItem className="menu-item" onClick={navigateLogin}>
-        A preencher
+      <MenuItem className="menu-item" onClick={()=>{navigate("/home")}}>
+        Home
       </MenuItem>
+      {(user.cargo === "Diretor" | user.cargo === "Superintendente") && (
+        <MenuItem className="menu-item" onClick={()=>{navigate("/user/edit")}}>
+          Usuários
+        </MenuItem>
+      )}
       {user.cargo === "Dirigente" && (
-        <MenuItem className="menu-item" onClick={navigateLogin}>
+        <MenuItem className="menu-item" onClick={navigate("/login")}>
           A preencher
         </MenuItem>
       )}

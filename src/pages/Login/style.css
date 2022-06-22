@@ -6,8 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30vh;
-  width: 30vh;
+  height: 200px;
+  width: 200px;
 }
 
 .auth-button {
