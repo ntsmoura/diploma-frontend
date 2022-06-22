@@ -18,7 +18,7 @@ function Home() {
         <Menu user={user} />
         <div className="home-paper-content">
           <Typography id="home-typo" variant="h4">
-            Bem vindo: {user.nome}!
+            Bem vindo: {user.nome}.
           </Typography>
           <Typography id="home-typo" variant="h5">
             Cargo: {user.cargo}.

@@ -15,7 +15,7 @@ function Menu({ user }) {
         Home
       </MenuItem>
       {(user.cargo === "Diretor" | user.cargo === "Superintendente") && (
-        <MenuItem className="menu-item" onClick={()=>{navigate("/user/edit")}}>
+        <MenuItem className="menu-item" onClick={()=>{navigate("/user")}}>
           Usuários
         </MenuItem>
       )}

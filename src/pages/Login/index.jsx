@@ -16,7 +16,7 @@ function Login() {
 
   const { login } = useAuth();
 
-  const submitLogin = async (event) => {
+  const submitLogin = async event => {
     event.preventDefault();
     await login({ cpf, senha }).catch(() => {
       toast.error("Usuário ou senha inválidos!");
@@ -33,24 +33,24 @@ function Login() {
           <form className="auth-form" onSubmit={submitLogin}>
             <div className="auth-input-container">
               <TextField
+                className="auth-textfield"
                 type="text"
                 name="cpf"
                 required
                 placeholder="CPF"
                 value={cpf}
                 variant="standard"
-                onChange={(e) => setCpf(e.target.value)}
+                onChange={e => setCpf(e.target.value)}
               />
-            </div>
-            <div className="auth-input-container">
               <TextField
+                className="auth-textfield"
                 variant="standard"
                 type="password"
                 name="senha"
                 required
                 placeholder="Senha"
                 value={senha}
-                onChange={(e) => setSenha(e.target.value)}
+                onChange={e => setSenha(e.target.value)}
               />
             </div>
             <div className="auth-button-container">

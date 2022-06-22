@@ -5,9 +5,11 @@ import Home from "../pages/Home";
 import useFindUser from "../hooks/useFindUser";
 import { UserContext } from "../contexts/UserContext";
 import PrivateRoute from "./PrivateRoutes";
-import ProtectedRoute from "./ProtectedRoutes"
+import ProtectedRoute from "./ProtectedRoutes";
 import Landing from "../pages/Landing";
-import EditUser from "../pages/User/EditUser"
+import EditUser from "../pages/User/EditUser";
+import ViewUser from "../pages/User/ViewUser";
+import CreateUser from "../pages/User/CreateUser";
 
 function AppRoutes() {
   const { user, setUser, isLoading } = useFindUser();
@@ -20,8 +22,26 @@ function AppRoutes() {
           <Route exact path="/home" element={<PrivateRoute />}>
             <Route exact path="/home" element={<Home />} />
           </Route>
-          <Route exact path="/user/edit" element={<ProtectedRoute roles={['Diretor','Superintendente']} />}>
+          <Route
+            exact
+            path="/user/edit"
+            element={<ProtectedRoute roles={["Diretor", "Superintendente"]} />}
+          >
             <Route exact path="/user/edit" element={<EditUser />} />
+          </Route>
+          <Route
+            exact
+            path="/user"
+            element={<ProtectedRoute roles={["Diretor", "Superintendente"]} />}
+          >
+            <Route exact path="/user" element={<ViewUser />} />
+          </Route>
+          <Route
+            exact
+            path="/user/create"
+            element={<ProtectedRoute roles={["Diretor", "Superintendente"]} />}
+          >
+            <Route exact path="/user/create" element={<CreateUser />} />
           </Route>
         </Routes>
       </Router>
