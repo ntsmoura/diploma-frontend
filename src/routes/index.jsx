@@ -24,10 +24,10 @@ function AppRoutes() {
           </Route>
           <Route
             exact
-            path="/user/edit"
+            path="/user/edit/:cpf"
             element={<ProtectedRoute roles={["Diretor", "Superintendente"]} />}
           >
-            <Route exact path="/user/edit" element={<EditUser />} />
+            <Route exact path="/user/edit/:cpf" element={<EditUser />} />
           </Route>
           <Route
             exact

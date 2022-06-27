@@ -32,6 +32,7 @@ function ViewUser() {
   const { user } = useContext(UserContext);
   const cookies = new Cookies();
   const token = cookies.get("token");
+  const [refresh, setRefresh] = useState(false);
 
   const config = {
     headers: { Authorization: `Bearer ${token}` }
@@ -39,8 +40,9 @@ function ViewUser() {
 
   useEffect(() => {
     getUsers();
+    setRefresh(false);
     // eslint-disable-next-line
-  }, []);
+  }, [refresh]);
 
   const getUsers = async () => {
     await api
@@ -66,9 +68,9 @@ function ViewUser() {
 
   const deleteUser = async () => {
     await api
-      .delete("/usuario", config)
+      .delete(`/usuario/${selectedUserCpf}`, config)
       .then(res => {
-        navigate("/user");
+        setRefresh(true);
       })
       .catch(err => {
         console.log(err);
@@ -81,9 +83,9 @@ function ViewUser() {
 
   const columns = [
     { field: "id", headerName: "CPF", width: 150 },
-    { field: "name", headerName: "Nome", width: 150 },
-    { field: "lastname", headerName: "Sobrenome", width: 150 },
-    { field: "office", headerName: "Cargo", width: 130 },
+    { field: "name", headerName: "Nome", width: 180 },
+    { field: "lastname", headerName: "Sobrenome", width: 180 },
+    { field: "office", headerName: "Cargo", width: 250 },
     { field: "cnumber", headerName: "Telefone", width: 130 },
     { field: "email", headerName: "E-mail", width: 180 }
   ];
@@ -98,7 +100,7 @@ function ViewUser() {
             rows={users}
             columns={columns}
             /*getRowId={row => row.cpf}*/
-            pageSize={5}
+            pageSize={4}
             rowsPerPageOptions={[5]}
             onSelectionModelChange={ids => {
               if (ids[0]) {
@@ -123,7 +125,7 @@ function ViewUser() {
               id="edit-button"
               disabled={buttonDisable}
               onClick={() => {
-                console.log("editar");
+                navigate("/user/edit/" + selectedUserCpf);
               }}
               variant="contained"
             >
