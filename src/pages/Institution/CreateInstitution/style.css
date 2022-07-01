@@ -1,0 +1,46 @@
+.create-institution-input-container {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+}
+
+.create-institution-paper {
+  /*display: flex;
+    justify-content: center;
+    align-items: center;*/
+  height: 80vh;
+  width: 80vw;
+}
+.create-institution-paper-content {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+.create-institution-page {
+  background-color: rgb(158, 158, 148);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-institution-button-container {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.create-institution-textfield {
+  margin-top: 1% !important;
+}
+
+.create-institution-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+  width: 100%;
+}

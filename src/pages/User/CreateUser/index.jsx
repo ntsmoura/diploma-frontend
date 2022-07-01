@@ -41,10 +41,11 @@ function CreateUser() {
 
   const createNewUser = async event => {
     event.preventDefault();
+    const instituicaoId = user.instituicao.id;
     await api
       .post(
         "/usuario",
-        { cpf, cargo, nome, sobrenome, telefone, email },
+        { cpf, cargo, nome, sobrenome, telefone, email, instituicaoId },
         config
       )
       .then(res => {

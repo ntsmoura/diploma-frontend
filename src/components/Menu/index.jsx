@@ -33,14 +33,16 @@ function Menu({ user }) {
       );
     else if (user.cargo === "Dirigente")
       return (
-        <MenuItem
-          className="menu-item"
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          A preencher
-        </MenuItem>
+        <div>
+          <MenuItem
+            className="menu-item"
+            onClick={() => {
+              navigate("/institution");
+            }}
+          >
+            Instituição
+          </MenuItem>
+        </div>
       );
     else return <div />;
   };

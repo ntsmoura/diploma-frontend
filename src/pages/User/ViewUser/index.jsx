@@ -50,14 +50,18 @@ function ViewUser() {
       .then(res => {
         const userArray = [];
         res.data.forEach((item, index) => {
-          let value = {};
-          value.id = item.cpf;
-          value.name = item.nome;
-          value.office = item.cargo;
-          value.cnumber = item.telefone;
-          value.lastname = item.sobrenome;
-          value.email = item.email;
-          userArray.push(value);
+          if (item.instituicao) {
+            if (item.instituicao.id === user.instituicao.id) {
+              let value = {};
+              value.id = item.cpf;
+              value.name = item.nome;
+              value.office = item.cargo;
+              value.cnumber = item.telefone;
+              value.lastname = item.sobrenome;
+              value.email = item.email;
+              userArray.push(value);
+            }
+          }
         });
         setUsers(userArray);
       })
@@ -68,7 +72,9 @@ function ViewUser() {
 
   const deleteUser = async () => {
     await api
-      .delete(`/usuario/${selectedUserCpf}`, config)
+      .delete("/usuario", {
+        headers: { cpf: selectedUserCpf, Authorization: `Bearer ${token}` }
+      })
       .then(res => {
         setRefresh(true);
       })

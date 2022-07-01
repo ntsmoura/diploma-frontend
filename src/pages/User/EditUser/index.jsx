@@ -44,8 +44,7 @@ function CreateUser() {
   useEffect(() => {
     api
       .get("/usuario/obter", {
-        params: { cpf: params.cpf },
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { cpf: params.cpf, Authorization: `Bearer ${token}` }
       })
       .then(response => {
         setCargo(response.data.cargo);
@@ -79,7 +78,6 @@ function CreateUser() {
       <Paper className="edit-user-paper" elevation={8}>
         <Menu user={user} />
         <div className="edit-user-paper-content">
-          {params.cpf}
           <form className="edit-user-form" onSubmit={editSelectedUser}>
             <div className="edit-user-input-container">
               <TextField
@@ -127,6 +125,7 @@ function CreateUser() {
                 variant="standard"
                 type="text"
                 name="email"
+                disabled={true}
                 required
                 placeholder="E-mail"
                 value={email}
@@ -136,6 +135,7 @@ function CreateUser() {
                 <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                   <InputLabel id="edit-user-select-label">Cargo</InputLabel>
                   <Select
+                    disabled={true}
                     className="edit-user-select"
                     value={cargo}
                     variant="standard"
@@ -155,6 +155,7 @@ function CreateUser() {
                 <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                   <InputLabel id="edit-user-select-label">Cargo</InputLabel>
                   <Select
+                    disabled={true}
                     className="edit-user-select"
                     value={cargo}
                     label="Cargo"

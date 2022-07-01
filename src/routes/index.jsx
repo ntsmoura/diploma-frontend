@@ -10,6 +10,7 @@ import Landing from "../pages/Landing";
 import EditUser from "../pages/User/EditUser";
 import ViewUser from "../pages/User/ViewUser";
 import CreateUser from "../pages/User/CreateUser";
+import CreateInstitution from "../pages/Institution/CreateInstitution";
 
 function AppRoutes() {
   const { user, setUser, isLoading } = useFindUser();
@@ -42,6 +43,15 @@ function AppRoutes() {
             element={<ProtectedRoute roles={["Diretor", "Superintendente"]} />}
           >
             <Route exact path="/user/create" element={<CreateUser />} />
+          </Route>
+          <Route
+            exact
+            path="/institution"
+            element={
+              <ProtectedRoute roles={["Dirigente", "Superintendente"]} />
+            }
+          >
+            <Route exact path="/institution" element={<CreateInstitution />} />
           </Route>
         </Routes>
       </Router>
