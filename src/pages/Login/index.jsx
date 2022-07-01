@@ -25,7 +25,13 @@ function Login() {
         navigate("/home");
       })
       .catch(err => {
-        toast.error("Usuário ou senha inválidos!");
+        if (err.response) {
+          if (err.response.status === 401)
+            toast.error("CPF ou Senha inválidos!");
+        } else
+          toast.error(
+            "Algum erro ocorreu. Tente novamente em alguns instantes!"
+          );
       });
   };
 

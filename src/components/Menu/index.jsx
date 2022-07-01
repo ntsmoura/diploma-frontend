@@ -20,31 +20,69 @@ function Menu({ user }) {
   };
 
   const render = () => {
-    if ((user.cargo === "Diretor") | (user.cargo === "Superintendente"))
+    if (user.cargo === "Diretor")
       return (
-        <MenuItem
-          className="menu-item"
-          onClick={() => {
-            navigate("/user");
-          }}
-        >
-          Usuários
-        </MenuItem>
-      );
-    else if (user.cargo === "Dirigente")
-      return (
-        <div>
+        <span className="menu-item-container">
           <MenuItem
             className="menu-item"
             onClick={() => {
-              navigate("/institution");
+              navigate("/user");
+            }}
+          >
+            Usuários
+          </MenuItem>
+          <MenuItem
+            className="menu-item"
+            onClick={() => {
+              navigate("/institution/edit");
             }}
           >
             Instituição
           </MenuItem>
-        </div>
+        </span>
       );
-    else return <div />;
+    else if (user.cargo === "Dirigente")
+      return (
+        <MenuItem
+          className="menu-item"
+          onClick={() => {
+            navigate("/institution/create");
+          }}
+        >
+          Instituição
+        </MenuItem>
+      );
+    else if (user.cargo === "Superintendente") {
+      return (
+        <span className="menu-item-container">
+          <MenuItem
+            className="menu-item"
+            onClick={() => {
+              navigate("/user");
+            }}
+          >
+            Usuários
+          </MenuItem>
+          <MenuItem
+            className="menu-item"
+            onClick={() => {
+              if (user.instituicao) navigate("/institution/edit");
+              else navigate("/institution/create");
+            }}
+          >
+            Instituição
+          </MenuItem>
+          <MenuItem
+            className="menu-item"
+            onClick={() => {
+              navigate("/institution/partner");
+            }}
+          >
+            Parceiras
+          </MenuItem>
+        </span>
+      );
+    } else return <div />;
   };
 
   return (

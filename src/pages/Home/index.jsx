@@ -23,9 +23,11 @@ function Home() {
           <Typography id="home-typo" variant="h5">
             Cargo: {user.cargo}.
           </Typography>
-          <Typography id="home-typo" variant="h6">
-            Instituição: {user.instituicao.nome}.
-          </Typography>
+          {user.instituicao && (
+            <Typography id="home-typo" variant="h6">
+              Instituição: {user.instituicao.nome}.
+            </Typography>
+          )}
         </div>
       </Paper>
     </div>

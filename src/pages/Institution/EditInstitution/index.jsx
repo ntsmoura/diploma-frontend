@@ -14,7 +14,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-function CreateInstitution() {
+function EditInstitution() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const cookies = new Cookies();
@@ -25,7 +25,6 @@ function CreateInstitution() {
   const [estado, setEstado] = useState("");
   const [credenciamento, setCredenciamento] = useState("");
   const [mantenedora, setMantenedora] = useState("");
-  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     if (user.instituicao) {
@@ -36,7 +35,6 @@ function CreateInstitution() {
       setEstado(instituicao.estado);
       setCredenciamento(instituicao.credenciamento);
       setMantenedora(instituicao.mantenedora);
-      setDisabled(true);
     }
     // eslint-disable-next-line
   }, []);
@@ -45,42 +43,28 @@ function CreateInstitution() {
     headers: { Authorization: `Bearer ${token}` }
   };
 
-  const createNewInstitution = async event => {
+  const editInstitution = async event => {
     event.preventDefault();
-    let tipo;
-    if (user.cargo === "Dirigente") tipo = "parceira";
-    else tipo = "validadora";
     await api
-      .post(
+      .patch(
         "/instituicao",
         {
+          id: user.instituicao.id,
           nome,
-          tipo,
           endereco,
           cidade,
           estado,
           credenciamento,
-          mantenedora,
-          acesso: 0
+          mantenedora
         },
         config
       )
       .then(res => {
-        if (user.cargo === "Dirigente") {
-          toast.success("Instituição criada!");
-          toast.success("A identificação da sua instituição é: " + res.data.id);
-        } else {
-          api
-            .patch(
-              "/usuario",
-              { cpf: user.cpf, instituicaoId: res.data.id },
-              config
-            )
-            .then(res => {
-              setUser(res.data);
-              navigate("/institution/edit");
-            });
-        }
+        api.get("/usuario", config).then(res => {
+          setUser(res.data);
+          navigate("/institution/edit");
+          toast.success("Instituição atualizada!");
+        });
       })
       .catch(err => {
         console.log(err);
@@ -88,90 +72,80 @@ function CreateInstitution() {
   };
 
   return (
-    <div className="create-institution-page">
-      <Paper className="create-institution-paper" elevation={8}>
+    <div className="edit-institution-page">
+      <Paper className="edit-institution-paper" elevation={8}>
         <Menu user={user} />
-        <div className="create-institution-paper-content">
-          <form
-            className="create-institution-form"
-            onSubmit={createNewInstitution}
-          >
-            <div className="create-institution-input-container">
+        <div className="edit-institution-paper-content">
+          <form className="edit-institution-form" onSubmit={editInstitution}>
+            <div className="edit-institution-input-container">
               <TextField
-                className="create-institution-textfield"
+                className="edit-institution-textfield"
                 variant="standard"
                 type="text"
                 name="nome"
                 requiredtoast
                 placeholder="Nome"
                 value={nome}
-                disabled={disabled}
                 onChange={e => setNome(e.target.value)}
               />
               <TextField
-                className="create-institution-textfield"
+                className="edit-institution-textfield"
                 variant="standard"
                 type="text"
                 name="endereco"
                 required
                 placeholder="Endereço"
                 value={endereco}
-                disabled={disabled}
                 onChange={e => setEndereco(e.target.value)}
               />
               <TextField
-                className="create-institution-textfield"
+                className="edit-institution-textfield"
                 variant="standard"
                 type="text"
                 name="cidade"
                 required
                 placeholder="Cidade"
                 value={cidade}
-                disabled={disabled}
                 onChange={e => setCidade(e.target.value)}
               />
               <TextField
-                className="create-institution-textfield"
+                className="edit-institution-textfield"
                 variant="standard"
                 type="text"
                 name="estado"
                 required
                 placeholder="Estado"
                 value={estado}
-                disabled={disabled}
                 onChange={e => setEstado(e.target.value)}
               />
               <TextField
-                className="create-institution-textfield"
+                className="edit-institution-textfield"
                 variant="standard"
                 type="text"
                 name="credenciamento"
                 required
                 placeholder="Credenciamento"
                 value={credenciamento}
-                disabled={disabled}
                 onChange={e => setCredenciamento(e.target.value)}
               />
               <TextField
-                className="create-institution-textfield"
+                className="edit-institution-textfield"
                 variant="standard"
                 type="text"
                 name="mantenedora"
                 required
                 placeholder="Mantenedora"
                 value={mantenedora}
-                disabled={disabled}
                 onChange={e => setMantenedora(e.target.value)}
               />
             </div>
-            <div className="create-institution-button-container">
+            <div className="edit-institution-button-container">
               <Button
                 type="submit"
-                disabled={disabled}
-                className="create-institution-button"
+                className="edit-institution-button"
                 variant="contained"
               >
-                Concluir
+                Editar
               </Button>
             </div>
           </form>
@@ -182,4 +156,4 @@ function CreateInstitution() {
   );
 }
 
-export default CreateInstitution;
+export default EditInstitution;

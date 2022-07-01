@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Paper,
   Button,
@@ -23,11 +23,11 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-function ViewUser() {
-  const [selectedUserCpf, setSelectedUserCpf] = useState("");
+function Partner() {
+  const [selectedPartner, setSelectedPartner] = useState(0);
   const [buttonDisable, setButtonDisable] = useState(true);
   const [open, setOpen] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [partners, setPartners] = useState([]);
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const cookies = new Cookies();
@@ -39,49 +39,56 @@ function ViewUser() {
   };
 
   useEffect(() => {
-    getUsers();
+    getPartners();
     setRefresh(false);
     // eslint-disable-next-line
   }, [refresh]);
 
-  const returnUserObject = item => {
+  const returnPartnerObject = item => {
     let value = {};
-    value.id = item.cpf;
+    value.id = item.id;
     value.name = item.nome;
-    value.office = item.cargo;
-    value.cnumber = item.telefone;
-    value.lastname = item.sobrenome;
-    value.email = item.email;
+    value.city = item.cidade;
+    value.state = item.estado;
+    value.credentials = item.credenciamento;
+    if (item.acesso) value.access = "Sim";
+    else value.access = "Não";
     return value;
   };
 
-  const getUsers = async () => {
+  const getPartners = async () => {
     await api
-      .get("/usuario/all", config)
+      .get("/instituicao/all", config)
       .then(res => {
-        const userArray = [];
+        const partnerArray = [];
         res.data.forEach(item => {
-          if (item.instituicao) {
-            if (item.instituicao.id === user.instituicao.id) {
-              userArray.push(returnUserObject(item));
+          if (item.tipo) {
+            if (item.tipo === "parceira") {
+              partnerArray.push(returnPartnerObject(item));
             }
           }
         });
-        setUsers(userArray);
+        setPartners(partnerArray);
       })
       .catch(err => {
         console.log(err);
-        setUsers([]);
+        setPartners([]);
       });
   };
 
-  const deleteUser = async () => {
+  const validatePartner = async () => {
     await api
-      .delete("/usuario", {
-        headers: { cpf: selectedUserCpf, Authorization: `Bearer ${token}` }
-      })
+      .patch(
+        "/instituicao/liberarAcesso",
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}`, id: selectedPartner }
+        }
+      )
       .then(res => {
         setRefresh(true);
+        navigate("/institution/partner");
+        toast.success("Parceiro autorizado!");
       })
       .catch(err => {
         console.log(err);
@@ -93,29 +100,28 @@ function ViewUser() {
   };
 
   const columns = [
-    { field: "id", headerName: "CPF", width: 150 },
-    { field: "name", headerName: "Nome", width: 180 },
-    { field: "lastname", headerName: "Sobrenome", width: 180 },
-    { field: "office", headerName: "Cargo", width: 250 },
-    { field: "cnumber", headerName: "Telefone", width: 130 },
-    { field: "email", headerName: "E-mail", width: 180 }
+    { field: "id", headerName: "Id", width: 100 },
+    { field: "name", headerName: "Nome", width: 200 },
+    { field: "city", headerName: "Cidade", width: 180 },
+    { field: "state", headerName: "Estado", width: 180 },
+    { field: "credentials", headerName: "Credenciais", width: 180 },
+    { field: "access", headerName: "Autorizado?", width: 100 }
   ];
 
   return (
-    <div className="view-user-page">
-      <Paper className="view-user-paper" elevation={8}>
+    <div className="partner-page">
+      <Paper className="partner-paper" elevation={8}>
         <Menu user={user} />
-        <div className="view-user-paper-content">
+        <div className="partner-paper-content">
           <DataGrid
             style={{ height: "100%", width: "100%" }}
-            rows={users}
+            rows={partners}
             columns={columns}
-            /*getRowId={row => row.cpf}*/
             pageSize={4}
             rowsPerPageOptions={[5]}
             onSelectionModelChange={ids => {
               if (ids[0]) {
-                setSelectedUserCpf(ids[0]);
+                setSelectedPartner(ids[0]);
                 setButtonDisable(false);
               } else {
                 setButtonDisable(true);
@@ -124,33 +130,14 @@ function ViewUser() {
           />
           <div className="button-container">
             <Button
-              id="create-button"
-              onClick={() => {
-                navigate("/user/create");
-              }}
-              variant="contained"
-            >
-              Criar Usuário
-            </Button>
-            <Button
-              id="edit-button"
-              disabled={buttonDisable}
-              onClick={() => {
-                navigate("/user/edit/" + selectedUserCpf);
-              }}
-              variant="contained"
-            >
-              Editar Usuário
-            </Button>
-            <Button
-              id="delete-button"
+              id="validate-button"
               disabled={buttonDisable}
               onClick={() => {
                 setOpen(true);
               }}
               variant="contained"
             >
-              Deletar Usuário
+              Autorizar Parceira
             </Button>
           </div>
         </div>
@@ -164,14 +151,15 @@ function ViewUser() {
         <DialogTitle id="alert-dialog-title">{"Tem certeza?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Quer realmente deletar o usuário de CPF: {selectedUserCpf}?
+            Quer realmente autorizar a parceira de identificação:
+            {selectedPartner}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button
             onClick={() => {
               setOpen(false);
-              deleteUser();
+              validatePartner();
             }}
           >
             Sim
@@ -181,8 +169,9 @@ function ViewUser() {
           </Button>
         </DialogActions>
       </Dialog>
+      <ToastContainer />
     </div>
   );
 }
 
-export default ViewUser;
+export default Partner;
