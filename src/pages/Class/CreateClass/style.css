@@ -1,0 +1,46 @@
+.create-class-input-container {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+}
+
+.create-class-paper {
+  /*display: flex;
+    justify-content: center;
+    align-items: center;*/
+  height: 80vh;
+  width: 80vw;
+}
+.create-class-paper-content {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+.create-class-page {
+  background-color: rgb(158, 158, 148);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-class-button-container {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.create-class-textfield {
+  margin-top: 1% !important;
+}
+
+.create-class-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+  width: 100%;
+}

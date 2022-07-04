@@ -82,6 +82,17 @@ function Menu({ user }) {
           </MenuItem>
         </span>
       );
+    } else if (user.cargo === "Funcionário de Instituição Parceira") {
+      return (
+        <MenuItem
+          className="menu-item"
+          onClick={() => {
+            navigate("/class");
+          }}
+        >
+          Cursos
+        </MenuItem>
+      );
     } else return <div />;
   };
 

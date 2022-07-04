@@ -13,6 +13,9 @@ import CreateUser from "../pages/User/CreateUser";
 import EditInstitution from "../pages/Institution/EditInstitution";
 import CreateInstitution from "../pages/Institution/CreateInstitution";
 import Partner from "../pages/Institution/Partner";
+import CreateClass from "../pages/Class/CreateClass";
+import ViewClass from "../pages/Class/ViewClass";
+import EditClass from "../pages/Class/EditClass";
 
 function AppRoutes() {
   const { user, setUser, isLoading } = useFindUser();
@@ -76,6 +79,33 @@ function AppRoutes() {
             element={<ProtectedRoute roles={["Superintendente"]} />}
           >
             <Route exact path="/institution/partner" element={<Partner />} />
+          </Route>
+          <Route
+            exact
+            path="/class/create"
+            element={
+              <ProtectedRoute roles={["Funcionário de Instituição Parceira"]} />
+            }
+          >
+            <Route exact path="/class/create" element={<CreateClass />} />
+          </Route>
+          <Route
+            exact
+            path="/class"
+            element={
+              <ProtectedRoute roles={["Funcionário de Instituição Parceira"]} />
+            }
+          >
+            <Route exact path="/class" element={<ViewClass />} />
+          </Route>
+          <Route
+            exact
+            path="/class/edit/:eMEC"
+            element={
+              <ProtectedRoute roles={["Funcionário de Instituição Parceira"]} />
+            }
+          >
+            <Route exact path="/class/edit/:eMEC" element={<EditClass />} />
           </Route>
         </Routes>
       </Router>

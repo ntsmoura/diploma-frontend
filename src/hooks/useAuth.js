@@ -28,7 +28,7 @@ export default function useAuth() {
           cookies.set("token", token, {
             path: "/",
             sameSite: "strict",
-            expires: new Date(new Date().getTime() + 15 * 60000)
+            expires: new Date(new Date().getTime() + 60 * 60000)
           });
           await api
             .get("/usuario", { headers: { Authorization: `Bearer ${token}` } })
