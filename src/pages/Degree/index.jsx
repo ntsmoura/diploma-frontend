@@ -60,7 +60,9 @@ function Degree() {
   const returnDegreeObject = item => {
     let value = {};
     value.id = item.id;
-    value.date = new Date(item.data).toLocaleDateString();
+    value.date = new Date(item.data).toLocaleString("pt-BR", {
+      timeZone: "America/Bahia"
+    });
     value.attachment = item.anexo;
     value.status = item.status;
     value.class = item.curso.eMEC;
@@ -115,7 +117,7 @@ function Degree() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 150 },
-    { field: "date", headerName: "Data", width: 150 },
+    { field: "date", headerName: "Data", width: 200 },
     { field: "attachment", headerName: "Anexos", width: 200 },
     { field: "status", headerName: "Status", width: 150 },
     { field: "class", headerName: "eMEC", width: 150 }

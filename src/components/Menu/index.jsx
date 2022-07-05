@@ -104,6 +104,17 @@ function Menu({ user }) {
           Diplomas
         </MenuItem>
       );
+    } else if (user.cargo === "Coordenador") {
+      return (
+        <MenuItem
+          className="menu-item"
+          onClick={() => {
+            navigate("/log");
+          }}
+        >
+          Auditoria
+        </MenuItem>
+      );
     } else return <div />;
   };
 

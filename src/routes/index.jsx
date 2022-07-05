@@ -17,6 +17,7 @@ import CreateClass from "../pages/Class/CreateClass";
 import ViewClass from "../pages/Class/ViewClass";
 import EditClass from "../pages/Class/EditClass";
 import Degree from "../pages/Degree";
+import Logs from "../pages/Logs";
 
 function AppRoutes() {
   const { user, setUser, isLoading } = useFindUser();
@@ -118,6 +119,13 @@ function AppRoutes() {
             }
           >
             <Route exact path="/degree" element={<Degree />} />
+          </Route>
+          <Route
+            exact
+            path="/log"
+            element={<ProtectedRoute roles={["Coordenador"]} />}
+          >
+            <Route exact path="/log" element={<Logs />} />
           </Route>
         </Routes>
       </Router>

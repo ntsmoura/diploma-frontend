@@ -1,0 +1,51 @@
+.view-log-paper {
+  /*display: flex;
+    justify-content: center;
+    align-items: center;*/
+  height: 80vh;
+  width: 80vw;
+}
+.view-log-paper-content {
+  display: flex;
+  /*margin-top: 5%;*/
+  height: 80%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.view-log-page {
+  background-color: rgb(158, 158, 148);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+#delete-button {
+  background-color: #ed4558 !important;
+  margin: 1% 1% 1% 1% !important;
+}
+
+#edit-button {
+  background-color: #3c62c9 !important;
+  margin: 1% 1% 1% 1% !important;
+}
+
+#create-button {
+  background-color: #4ed62f !important;
+  margin: 1% 1% 1% 1% !important;
+}
+
+#log-button {
+  background-color: #fcba03 !important;
+  margin: 1% 1% 1% 1% !important;
+}

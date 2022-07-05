@@ -185,7 +185,11 @@ function ViewClass() {
               id="degree-button"
               disabled={buttonDisable}
               onClick={() => {
-                setOpenDegree(true);
+                if (user.instituicao.acesso) setOpenDegree(true);
+                else
+                  toast.error(
+                    "Sua instituição não está autorizada a solicitar diplomas!"
+                  );
               }}
               variant="contained"
             >
