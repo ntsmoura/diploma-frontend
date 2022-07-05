@@ -71,7 +71,6 @@ function ViewClass() {
         setClasses(classArray);
       })
       .catch(err => {
-        console.log(err);
         setClasses([]);
       });
   };
@@ -101,9 +100,11 @@ function ViewClass() {
         )
         .then(res => {
           toast.success(`Diploma do curso ${selectedClass} solicitado!`);
+          setAnexo("");
         })
         .catch(err => {
           toast.error("Algo aconteceu, tente novamente mais tarde!");
+          setAnexo("");
         });
       setOpenDegree(false);
     } else {

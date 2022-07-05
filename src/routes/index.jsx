@@ -16,6 +16,7 @@ import Partner from "../pages/Institution/Partner";
 import CreateClass from "../pages/Class/CreateClass";
 import ViewClass from "../pages/Class/ViewClass";
 import EditClass from "../pages/Class/EditClass";
+import Degree from "../pages/Degree";
 
 function AppRoutes() {
   const { user, setUser, isLoading } = useFindUser();
@@ -106,6 +107,17 @@ function AppRoutes() {
             }
           >
             <Route exact path="/class/edit/:eMEC" element={<EditClass />} />
+          </Route>
+          <Route
+            exact
+            path="/degree"
+            element={
+              <ProtectedRoute
+                roles={["Funcionário de Instituição Validadora"]}
+              />
+            }
+          >
+            <Route exact path="/degree" element={<Degree />} />
           </Route>
         </Routes>
       </Router>

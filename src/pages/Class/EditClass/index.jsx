@@ -89,7 +89,7 @@ function EditClass() {
                 placeholder="eMEC"
                 value={eMEC}
                 variant="standard"
-                onChange={e => setEMec(e.target.value)}
+                disabled
               />
               <TextField
                 className="edit-class-textfield"

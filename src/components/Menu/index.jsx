@@ -93,6 +93,17 @@ function Menu({ user }) {
           Cursos
         </MenuItem>
       );
+    } else if (user.cargo === "Funcionário de Instituição Validadora") {
+      return (
+        <MenuItem
+          className="menu-item"
+          onClick={() => {
+            navigate("/degree");
+          }}
+        >
+          Diplomas
+        </MenuItem>
+      );
     } else return <div />;
   };
 
