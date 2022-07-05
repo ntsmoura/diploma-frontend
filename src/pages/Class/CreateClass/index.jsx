@@ -33,6 +33,7 @@ function CreateClass() {
 
   const createNewClass = async event => {
     event.preventDefault();
+    const instituicaoId = user.instituicao.id;
     await api
       .post(
         "/curso",
@@ -43,7 +44,8 @@ function CreateClass() {
           autorização,
           reconhecimento,
           renovação,
-          observação
+          observação,
+          instituicaoId
         },
         config
       )

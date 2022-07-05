@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Paper,
   Button,
@@ -8,7 +8,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
+  TextField
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { UserContext } from "../../../contexts/UserContext";
@@ -27,16 +28,14 @@ function ViewClass() {
   const [selectedClass, setSelectedClass] = useState("");
   const [buttonDisable, setButtonDisable] = useState(true);
   const [open, setOpen] = useState(false);
+  const [openDegree, setOpenDegree] = useState(false);
   const [classes, setClasses] = useState([]);
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const cookies = new Cookies();
   const token = cookies.get("token");
   const [refresh, setRefresh] = useState(false);
-
-  const config = {
-    headers: { Authorization: `Bearer ${token}` }
-  };
+  const [anexo, setAnexo] = useState("");
 
   useEffect(() => {
     getClasses();
@@ -58,7 +57,12 @@ function ViewClass() {
 
   const getClasses = async () => {
     await api
-      .get("/curso/all", config)
+      .get("/curso/instituicaoId", {
+        headers: {
+          id: user.instituicao.id,
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then(res => {
         const classArray = [];
         res.data.forEach(item => {
@@ -85,8 +89,34 @@ function ViewClass() {
       });
   };
 
+  const submitDegree = async () => {
+    if (anexo !== "") {
+      await api
+        .post(
+          "/diploma",
+          { eMEC: selectedClass, anexo },
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        )
+        .then(res => {
+          toast.success(`Diploma do curso ${selectedClass} solicitado!`);
+        })
+        .catch(err => {
+          toast.error("Algo aconteceu, tente novamente mais tarde!");
+        });
+      setOpenDegree(false);
+    } else {
+      toast.error("É preciso incluir os anexos.");
+    }
+  };
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleCloseDegree = () => {
+    setOpenDegree(false);
   };
 
   const columns = [
@@ -150,6 +180,16 @@ function ViewClass() {
             >
               Deletar Curso
             </Button>
+            <Button
+              id="degree-button"
+              disabled={buttonDisable}
+              onClick={() => {
+                setOpenDegree(true);
+              }}
+              variant="contained"
+            >
+              Solicitar Diploma
+            </Button>
           </div>
         </div>
       </Paper>
@@ -179,6 +219,31 @@ function ViewClass() {
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog open={openDegree} onClose={handleCloseDegree}>
+        <DialogTitle>Solicitar diploma</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Anexe os arquivos necessários para a validação do diploma.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Anexos"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={anexo}
+            required
+            onChange={e => setAnexo(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDegree}>Cancelar</Button>
+          <Button onClick={submitDegree}>Submeter</Button>
+        </DialogActions>
+      </Dialog>
+      <ToastContainer />
     </div>
   );
 }

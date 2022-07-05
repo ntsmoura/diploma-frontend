@@ -166,7 +166,7 @@ function CreateUser() {
                     </MenuItem>
                     <MenuItem value={"Dirigente"}>Dirigente</MenuItem>
                     <MenuItem value={"Coordenador"}>Coordenador CARE</MenuItem>
-                    <MenuItem value={"Funcionário de Institução Validadora"}>
+                    <MenuItem value={"Funcionário de Instituição Validadora"}>
                       Funcionário
                     </MenuItem>
                   </Select>

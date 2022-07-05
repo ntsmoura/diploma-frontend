@@ -34,10 +34,6 @@ function ViewUser() {
   const token = cookies.get("token");
   const [refresh, setRefresh] = useState(false);
 
-  const config = {
-    headers: { Authorization: `Bearer ${token}` }
-  };
-
   useEffect(() => {
     getUsers();
     setRefresh(false);
@@ -57,15 +53,16 @@ function ViewUser() {
 
   const getUsers = async () => {
     await api
-      .get("/usuario/all", config)
+      .get("/usuario/instituicaoId", {
+        headers: {
+          id: user.instituicao.id,
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then(res => {
         const userArray = [];
         res.data.forEach(item => {
-          if (item.instituicao) {
-            if (item.instituicao.id === user.instituicao.id) {
-              userArray.push(returnUserObject(item));
-            }
-          }
+          userArray.push(returnUserObject(item));
         });
         setUsers(userArray);
       })
