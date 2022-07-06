@@ -62,8 +62,8 @@ $ npm install
 # Rode em um servidor local
 $ npm start
 ```
-Acesse 'http://localhost:3000' para utilizar a aplicação.
+Acesse http://localhost:3000 para utilizar a aplicação.
 
-É possível ter um .env com a constante REACT_APP_API para definir a rota do backend, por padrão ela é 'http://localhost:5000'.
+É possível ter um .env com a constante REACT_APP_API para definir a rota do backend, por padrão ela é http://localhost:5000.
 	
 </div>
