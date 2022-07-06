@@ -6,7 +6,7 @@
 <!-- Description -->
 
 <h4 align="center">
-	UFBA - Instituto de Computação - MATA62 - 2022.1 - Natan Moura
+	UFBA - Instituto de Computação - MATA62 - 2022.1 - Igor Sobral, João Lucas Lima de Melo, Matheus Guimarães, Natan Moura
 </h4>
 
 <!-- Summary -->
